@@ -1,0 +1,45 @@
+name: my_rss
+description: "My RSS"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  forui: ^0.17.0
+  auto_route: ^11.1.0
+  drift: ^2.30.0
+  drift_flutter: ^0.2.8
+  path_provider: ^2.1.5
+  listen_it: ^5.3.4
+  get_it: ^9.2.0
+  watch_it: ^2.4.1
+  command_it: ^9.5.0
+  rss_dart: ^1.0.14
+  injectable: ^2.7.1+4
+  flutter_hooks: ^0.21.3+1
+  forui_hooks: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  build_runner: ^2.10.4
+  freezed: ^3.2.3
+  json_serializable: ^6.11.2
+  drift_dev: ^2.30.0
+  very_good_analysis: ^10.0.0
+  # Code generators
+  injectable_generator: ^2.7.1+4
+  auto_route_generator: ^10.4.0
+
+flutter:
+  uses-material-design: true
