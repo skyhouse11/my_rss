@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_rss/core/helper/datetime_json.dart';
-import 'package:my_rss/domain/models/feed_item.dart';
 import 'package:rss_dart/dart_rss.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,12 +16,16 @@ abstract class Feed with _$Feed {
     String? description,
     List<String>? categories,
     List<String>? tags,
-    List<FeedItem>? items,
     @JsonKey(
       fromJson: DatetimeJson.dateTimeFromIso,
       toJson: DatetimeJson.dateTimeToIso,
     )
     DateTime? createdAt,
+    @JsonKey(
+      fromJson: DatetimeJson.dateTimeFromIso,
+      toJson: DatetimeJson.dateTimeToIso,
+    )
+    DateTime? lastUpdatedAt,
     @Default(true) bool autoFetch,
   }) = _Feed;
 
@@ -38,18 +41,8 @@ abstract class Feed with _$Feed {
       categories: rssFeed.categories.isNotEmpty
           ? rssFeed.categories.map((e) => e.value ?? '').toList()
           : null,
-      items: rssFeed.items
-          .map(
-            (rssItem) => FeedItem(
-              id: rssItem.guid ?? rssItem.link ?? const Uuid().v4(),
-              feedId: id,
-              title: rssItem.title ?? 'No title',
-              url: rssItem.link ?? '',
-              description: rssItem.description,
-              publishedAt: DateTime.tryParse(rssItem.pubDate ?? ''),
-            ),
-          )
-          .toList(),
+      lastUpdatedAt: DateTime.now(),
+      createdAt: DateTime.now(),
     );
   }
 }

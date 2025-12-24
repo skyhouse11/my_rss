@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Feed {
 
- String get id; String get title; String get url; String? get folderId; String? get description; List<String>? get categories; List<String>? get tags; List<FeedItem>? get items;@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? get createdAt; bool get autoFetch;
+ String get id; String get title; String get url; String? get folderId; String? get description; List<String>? get categories; List<String>? get tags;@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? get createdAt;@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? get lastUpdatedAt; bool get autoFetch;
 /// Create a copy of Feed
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $FeedCopyWith<Feed> get copyWith => _$FeedCopyWithImpl<Feed>(this as Feed, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.folderId, folderId) || other.folderId == folderId)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.autoFetch, autoFetch) || other.autoFetch == autoFetch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.folderId, folderId) || other.folderId == folderId)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastUpdatedAt, lastUpdatedAt) || other.lastUpdatedAt == lastUpdatedAt)&&(identical(other.autoFetch, autoFetch) || other.autoFetch == autoFetch));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,url,folderId,description,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(items),createdAt,autoFetch);
+int get hashCode => Object.hash(runtimeType,id,title,url,folderId,description,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(tags),createdAt,lastUpdatedAt,autoFetch);
 
 @override
 String toString() {
-  return 'Feed(id: $id, title: $title, url: $url, folderId: $folderId, description: $description, categories: $categories, tags: $tags, items: $items, createdAt: $createdAt, autoFetch: $autoFetch)';
+  return 'Feed(id: $id, title: $title, url: $url, folderId: $folderId, description: $description, categories: $categories, tags: $tags, createdAt: $createdAt, lastUpdatedAt: $lastUpdatedAt, autoFetch: $autoFetch)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $FeedCopyWith<$Res>  {
   factory $FeedCopyWith(Feed value, $Res Function(Feed) _then) = _$FeedCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String url, String? folderId, String? description, List<String>? categories, List<String>? tags, List<FeedItem>? items,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? createdAt, bool autoFetch
+ String id, String title, String url, String? folderId, String? description, List<String>? categories, List<String>? tags,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? createdAt,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? lastUpdatedAt, bool autoFetch
 });
 
 
@@ -65,7 +65,7 @@ class _$FeedCopyWithImpl<$Res>
 
 /// Create a copy of Feed
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? folderId = freezed,Object? description = freezed,Object? categories = freezed,Object? tags = freezed,Object? items = freezed,Object? createdAt = freezed,Object? autoFetch = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? folderId = freezed,Object? description = freezed,Object? categories = freezed,Object? tags = freezed,Object? createdAt = freezed,Object? lastUpdatedAt = freezed,Object? autoFetch = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -74,8 +74,8 @@ as String,folderId: freezed == folderId ? _self.folderId : folderId // ignore: c
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,categories: freezed == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>?,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>?,items: freezed == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
-as List<FeedItem>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,lastUpdatedAt: freezed == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,autoFetch: null == autoFetch ? _self.autoFetch : autoFetch // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -162,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags,  List<FeedItem>? items, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt,  bool autoFetch)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? lastUpdatedAt,  bool autoFetch)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Feed() when $default != null:
-return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.items,_that.createdAt,_that.autoFetch);case _:
+return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.createdAt,_that.lastUpdatedAt,_that.autoFetch);case _:
   return orElse();
 
 }
@@ -183,10 +183,10 @@ return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags,  List<FeedItem>? items, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt,  bool autoFetch)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? lastUpdatedAt,  bool autoFetch)  $default,) {final _that = this;
 switch (_that) {
 case _Feed():
-return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.items,_that.createdAt,_that.autoFetch);case _:
+return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.createdAt,_that.lastUpdatedAt,_that.autoFetch);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +203,10 @@ return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags,  List<FeedItem>? items, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt,  bool autoFetch)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String url,  String? folderId,  String? description,  List<String>? categories,  List<String>? tags, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? createdAt, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso)  DateTime? lastUpdatedAt,  bool autoFetch)?  $default,) {final _that = this;
 switch (_that) {
 case _Feed() when $default != null:
-return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.items,_that.createdAt,_that.autoFetch);case _:
+return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,_that.categories,_that.tags,_that.createdAt,_that.lastUpdatedAt,_that.autoFetch);case _:
   return null;
 
 }
@@ -218,7 +218,7 @@ return $default(_that.id,_that.title,_that.url,_that.folderId,_that.description,
 @JsonSerializable()
 
 class _Feed implements Feed {
-  const _Feed({required this.id, required this.title, required this.url, this.folderId, this.description, final  List<String>? categories, final  List<String>? tags, final  List<FeedItem>? items, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) this.createdAt, this.autoFetch = true}): _categories = categories,_tags = tags,_items = items;
+  const _Feed({required this.id, required this.title, required this.url, this.folderId, this.description, final  List<String>? categories, final  List<String>? tags, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) this.createdAt, @JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) this.lastUpdatedAt, this.autoFetch = true}): _categories = categories,_tags = tags;
   factory _Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 
 @override final  String id;
@@ -244,16 +244,8 @@ class _Feed implements Feed {
   return EqualUnmodifiableListView(value);
 }
 
- final  List<FeedItem>? _items;
-@override List<FeedItem>? get items {
-  final value = _items;
-  if (value == null) return null;
-  if (_items is EqualUnmodifiableListView) return _items;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
 @override@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) final  DateTime? createdAt;
+@override@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) final  DateTime? lastUpdatedAt;
 @override@JsonKey() final  bool autoFetch;
 
 /// Create a copy of Feed
@@ -269,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.folderId, folderId) || other.folderId == folderId)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.autoFetch, autoFetch) || other.autoFetch == autoFetch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.folderId, folderId) || other.folderId == folderId)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastUpdatedAt, lastUpdatedAt) || other.lastUpdatedAt == lastUpdatedAt)&&(identical(other.autoFetch, autoFetch) || other.autoFetch == autoFetch));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,url,folderId,description,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_items),createdAt,autoFetch);
+int get hashCode => Object.hash(runtimeType,id,title,url,folderId,description,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_tags),createdAt,lastUpdatedAt,autoFetch);
 
 @override
 String toString() {
-  return 'Feed(id: $id, title: $title, url: $url, folderId: $folderId, description: $description, categories: $categories, tags: $tags, items: $items, createdAt: $createdAt, autoFetch: $autoFetch)';
+  return 'Feed(id: $id, title: $title, url: $url, folderId: $folderId, description: $description, categories: $categories, tags: $tags, createdAt: $createdAt, lastUpdatedAt: $lastUpdatedAt, autoFetch: $autoFetch)';
 }
 
 
@@ -289,7 +281,7 @@ abstract mixin class _$FeedCopyWith<$Res> implements $FeedCopyWith<$Res> {
   factory _$FeedCopyWith(_Feed value, $Res Function(_Feed) _then) = __$FeedCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String url, String? folderId, String? description, List<String>? categories, List<String>? tags, List<FeedItem>? items,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? createdAt, bool autoFetch
+ String id, String title, String url, String? folderId, String? description, List<String>? categories, List<String>? tags,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? createdAt,@JsonKey(fromJson: DatetimeJson.dateTimeFromIso, toJson: DatetimeJson.dateTimeToIso) DateTime? lastUpdatedAt, bool autoFetch
 });
 
 
@@ -306,7 +298,7 @@ class __$FeedCopyWithImpl<$Res>
 
 /// Create a copy of Feed
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? url = null,Object? folderId = freezed,Object? description = freezed,Object? categories = freezed,Object? tags = freezed,Object? items = freezed,Object? createdAt = freezed,Object? autoFetch = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? url = null,Object? folderId = freezed,Object? description = freezed,Object? categories = freezed,Object? tags = freezed,Object? createdAt = freezed,Object? lastUpdatedAt = freezed,Object? autoFetch = null,}) {
   return _then(_Feed(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -315,8 +307,8 @@ as String,folderId: freezed == folderId ? _self.folderId : folderId // ignore: c
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,categories: freezed == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>?,tags: freezed == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>?,items: freezed == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
-as List<FeedItem>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,lastUpdatedAt: freezed == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,autoFetch: null == autoFetch ? _self.autoFetch : autoFetch // ignore: cast_nullable_to_non_nullable
 as bool,
   ));

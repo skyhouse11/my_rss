@@ -16,10 +16,8 @@ _Feed _$FeedFromJson(Map<String, dynamic> json) => _Feed(
       ?.map((e) => e as String)
       .toList(),
   tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  items: (json['items'] as List<dynamic>?)
-      ?.map((e) => FeedItem.fromJson(e as Map<String, dynamic>))
-      .toList(),
   createdAt: DatetimeJson.dateTimeFromIso(json['createdAt'] as String?),
+  lastUpdatedAt: DatetimeJson.dateTimeFromIso(json['lastUpdatedAt'] as String?),
   autoFetch: json['autoFetch'] as bool? ?? true,
 );
 
@@ -31,7 +29,7 @@ Map<String, dynamic> _$FeedToJson(_Feed instance) => <String, dynamic>{
   'description': instance.description,
   'categories': instance.categories,
   'tags': instance.tags,
-  'items': instance.items,
   'createdAt': DatetimeJson.dateTimeToIso(instance.createdAt),
+  'lastUpdatedAt': DatetimeJson.dateTimeToIso(instance.lastUpdatedAt),
   'autoFetch': instance.autoFetch,
 };
