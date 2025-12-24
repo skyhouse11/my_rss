@@ -26,6 +26,7 @@ dependencies:
   injectable: ^2.7.1+4
   flutter_hooks: ^0.21.3+1
   forui_hooks: ^0.17.0
+  uuid: ^4.5.2
 
 dev_dependencies:
   flutter_test:
