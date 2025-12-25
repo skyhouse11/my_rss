@@ -1,9 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:my_rss/data/database/daos/category_dao.dart';
+import 'package:my_rss/data/database/daos/feed_item_dao.dart';
 import 'package:my_rss/data/database/daos/tag_dao.dart';
 import 'package:my_rss/data/database/tables/category_table.dart';
 import 'package:my_rss/data/database/tables/feed_category_table.dart';
+import 'package:my_rss/data/database/tables/feed_items_table.dart';
 import 'package:my_rss/data/database/tables/feed_table.dart';
 import 'package:my_rss/data/database/tables/feed_tag_table.dart';
 import 'package:my_rss/data/database/tables/tag_table.dart';
@@ -12,14 +14,21 @@ import 'package:path_provider/path_provider.dart';
 part 'database.g.dart';
 
 @DriftDatabase(
-  tables: [FeedTable, TagTable, FeedTags, CategoryTable, FeedCategories],
-  daos: [TagDao, CategoryDao],
+  tables: [
+    FeedTable,
+    TagTable,
+    FeedTags,
+    CategoryTable,
+    FeedCategories,
+    FeedItemsTable,
+  ],
+  daos: [TagDao, CategoryDao, FeedItemDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -30,6 +39,7 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(feedTags);
         await m.createTable(categoryTable);
         await m.createTable(feedCategories);
+        await m.createTable(feedItemsTable);
       }
     },
   );
@@ -45,6 +55,7 @@ class AppDatabase extends _$AppDatabase {
 extension AppDatabaseExtensions on AppDatabase {
   TagDao get tagDao => TagDao(this);
   CategoryDao get categoryDao => CategoryDao(this);
+  FeedItemDao get feedItemDao => FeedItemDao(this);
 
   // saveFeedWithTagsAndCategories
   Future<void> saveFeedWithTagsAndCategories(

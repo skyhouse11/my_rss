@@ -1465,6 +1465,572 @@ class FeedCategoriesCompanion extends UpdateCompanion<FeedCategory> {
   }
 }
 
+class $FeedItemsTableTable extends FeedItemsTable
+    with TableInfo<$FeedItemsTableTable, FeedItemsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FeedItemsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: const Uuid().v4,
+  );
+  static const VerificationMeta _feedIdMeta = const VerificationMeta('feedId');
+  @override
+  late final GeneratedColumn<String> feedId = GeneratedColumn<String>(
+    'feed_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: 'REFERENCES feed_table(id)',
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String> url = GeneratedColumn<String>(
+    'url',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _publishedAtMeta = const VerificationMeta(
+    'publishedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> publishedAt = GeneratedColumn<DateTime>(
+    'published_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isReadMeta = const VerificationMeta('isRead');
+  @override
+  late final GeneratedColumn<bool> isRead = GeneratedColumn<bool>(
+    'is_read',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_read" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isFavoriteMeta = const VerificationMeta(
+    'isFavorite',
+  );
+  @override
+  late final GeneratedColumn<bool> isFavorite = GeneratedColumn<bool>(
+    'is_favorite',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_favorite" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    feedId,
+    title,
+    url,
+    description,
+    publishedAt,
+    isRead,
+    isFavorite,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'feed_items_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FeedItemsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('feed_id')) {
+      context.handle(
+        _feedIdMeta,
+        feedId.isAcceptableOrUnknown(data['feed_id']!, _feedIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_feedIdMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+        _urlMeta,
+        url.isAcceptableOrUnknown(data['url']!, _urlMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_urlMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('published_at')) {
+      context.handle(
+        _publishedAtMeta,
+        publishedAt.isAcceptableOrUnknown(
+          data['published_at']!,
+          _publishedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_read')) {
+      context.handle(
+        _isReadMeta,
+        isRead.isAcceptableOrUnknown(data['is_read']!, _isReadMeta),
+      );
+    }
+    if (data.containsKey('is_favorite')) {
+      context.handle(
+        _isFavoriteMeta,
+        isFavorite.isAcceptableOrUnknown(data['is_favorite']!, _isFavoriteMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FeedItemsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FeedItemsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      feedId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}feed_id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      url: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}url'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      publishedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}published_at'],
+      ),
+      isRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_read'],
+      )!,
+      isFavorite: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_favorite'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $FeedItemsTableTable createAlias(String alias) {
+    return $FeedItemsTableTable(attachedDatabase, alias);
+  }
+}
+
+class FeedItemsTableData extends DataClass
+    implements Insertable<FeedItemsTableData> {
+  final String id;
+  final String feedId;
+  final String title;
+  final String url;
+  final String? description;
+  final DateTime? publishedAt;
+  final bool isRead;
+  final bool isFavorite;
+  final DateTime createdAt;
+  const FeedItemsTableData({
+    required this.id,
+    required this.feedId,
+    required this.title,
+    required this.url,
+    this.description,
+    this.publishedAt,
+    required this.isRead,
+    required this.isFavorite,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['feed_id'] = Variable<String>(feedId);
+    map['title'] = Variable<String>(title);
+    map['url'] = Variable<String>(url);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || publishedAt != null) {
+      map['published_at'] = Variable<DateTime>(publishedAt);
+    }
+    map['is_read'] = Variable<bool>(isRead);
+    map['is_favorite'] = Variable<bool>(isFavorite);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  FeedItemsTableCompanion toCompanion(bool nullToAbsent) {
+    return FeedItemsTableCompanion(
+      id: Value(id),
+      feedId: Value(feedId),
+      title: Value(title),
+      url: Value(url),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      publishedAt: publishedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(publishedAt),
+      isRead: Value(isRead),
+      isFavorite: Value(isFavorite),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory FeedItemsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FeedItemsTableData(
+      id: serializer.fromJson<String>(json['id']),
+      feedId: serializer.fromJson<String>(json['feedId']),
+      title: serializer.fromJson<String>(json['title']),
+      url: serializer.fromJson<String>(json['url']),
+      description: serializer.fromJson<String?>(json['description']),
+      publishedAt: serializer.fromJson<DateTime?>(json['publishedAt']),
+      isRead: serializer.fromJson<bool>(json['isRead']),
+      isFavorite: serializer.fromJson<bool>(json['isFavorite']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'feedId': serializer.toJson<String>(feedId),
+      'title': serializer.toJson<String>(title),
+      'url': serializer.toJson<String>(url),
+      'description': serializer.toJson<String?>(description),
+      'publishedAt': serializer.toJson<DateTime?>(publishedAt),
+      'isRead': serializer.toJson<bool>(isRead),
+      'isFavorite': serializer.toJson<bool>(isFavorite),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  FeedItemsTableData copyWith({
+    String? id,
+    String? feedId,
+    String? title,
+    String? url,
+    Value<String?> description = const Value.absent(),
+    Value<DateTime?> publishedAt = const Value.absent(),
+    bool? isRead,
+    bool? isFavorite,
+    DateTime? createdAt,
+  }) => FeedItemsTableData(
+    id: id ?? this.id,
+    feedId: feedId ?? this.feedId,
+    title: title ?? this.title,
+    url: url ?? this.url,
+    description: description.present ? description.value : this.description,
+    publishedAt: publishedAt.present ? publishedAt.value : this.publishedAt,
+    isRead: isRead ?? this.isRead,
+    isFavorite: isFavorite ?? this.isFavorite,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  FeedItemsTableData copyWithCompanion(FeedItemsTableCompanion data) {
+    return FeedItemsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      feedId: data.feedId.present ? data.feedId.value : this.feedId,
+      title: data.title.present ? data.title.value : this.title,
+      url: data.url.present ? data.url.value : this.url,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      publishedAt: data.publishedAt.present
+          ? data.publishedAt.value
+          : this.publishedAt,
+      isRead: data.isRead.present ? data.isRead.value : this.isRead,
+      isFavorite: data.isFavorite.present
+          ? data.isFavorite.value
+          : this.isFavorite,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FeedItemsTableData(')
+          ..write('id: $id, ')
+          ..write('feedId: $feedId, ')
+          ..write('title: $title, ')
+          ..write('url: $url, ')
+          ..write('description: $description, ')
+          ..write('publishedAt: $publishedAt, ')
+          ..write('isRead: $isRead, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    feedId,
+    title,
+    url,
+    description,
+    publishedAt,
+    isRead,
+    isFavorite,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FeedItemsTableData &&
+          other.id == this.id &&
+          other.feedId == this.feedId &&
+          other.title == this.title &&
+          other.url == this.url &&
+          other.description == this.description &&
+          other.publishedAt == this.publishedAt &&
+          other.isRead == this.isRead &&
+          other.isFavorite == this.isFavorite &&
+          other.createdAt == this.createdAt);
+}
+
+class FeedItemsTableCompanion extends UpdateCompanion<FeedItemsTableData> {
+  final Value<String> id;
+  final Value<String> feedId;
+  final Value<String> title;
+  final Value<String> url;
+  final Value<String?> description;
+  final Value<DateTime?> publishedAt;
+  final Value<bool> isRead;
+  final Value<bool> isFavorite;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const FeedItemsTableCompanion({
+    this.id = const Value.absent(),
+    this.feedId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.url = const Value.absent(),
+    this.description = const Value.absent(),
+    this.publishedAt = const Value.absent(),
+    this.isRead = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FeedItemsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String feedId,
+    required String title,
+    required String url,
+    this.description = const Value.absent(),
+    this.publishedAt = const Value.absent(),
+    this.isRead = const Value.absent(),
+    this.isFavorite = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : feedId = Value(feedId),
+       title = Value(title),
+       url = Value(url);
+  static Insertable<FeedItemsTableData> custom({
+    Expression<String>? id,
+    Expression<String>? feedId,
+    Expression<String>? title,
+    Expression<String>? url,
+    Expression<String>? description,
+    Expression<DateTime>? publishedAt,
+    Expression<bool>? isRead,
+    Expression<bool>? isFavorite,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (feedId != null) 'feed_id': feedId,
+      if (title != null) 'title': title,
+      if (url != null) 'url': url,
+      if (description != null) 'description': description,
+      if (publishedAt != null) 'published_at': publishedAt,
+      if (isRead != null) 'is_read': isRead,
+      if (isFavorite != null) 'is_favorite': isFavorite,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FeedItemsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? feedId,
+    Value<String>? title,
+    Value<String>? url,
+    Value<String?>? description,
+    Value<DateTime?>? publishedAt,
+    Value<bool>? isRead,
+    Value<bool>? isFavorite,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return FeedItemsTableCompanion(
+      id: id ?? this.id,
+      feedId: feedId ?? this.feedId,
+      title: title ?? this.title,
+      url: url ?? this.url,
+      description: description ?? this.description,
+      publishedAt: publishedAt ?? this.publishedAt,
+      isRead: isRead ?? this.isRead,
+      isFavorite: isFavorite ?? this.isFavorite,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (feedId.present) {
+      map['feed_id'] = Variable<String>(feedId.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (publishedAt.present) {
+      map['published_at'] = Variable<DateTime>(publishedAt.value);
+    }
+    if (isRead.present) {
+      map['is_read'] = Variable<bool>(isRead.value);
+    }
+    if (isFavorite.present) {
+      map['is_favorite'] = Variable<bool>(isFavorite.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FeedItemsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('feedId: $feedId, ')
+          ..write('title: $title, ')
+          ..write('url: $url, ')
+          ..write('description: $description, ')
+          ..write('publishedAt: $publishedAt, ')
+          ..write('isRead: $isRead, ')
+          ..write('isFavorite: $isFavorite, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1473,8 +2039,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $FeedTagsTable feedTags = $FeedTagsTable(this);
   late final $CategoryTableTable categoryTable = $CategoryTableTable(this);
   late final $FeedCategoriesTable feedCategories = $FeedCategoriesTable(this);
+  late final $FeedItemsTableTable feedItemsTable = $FeedItemsTableTable(this);
   late final TagDao tagDao = TagDao(this as AppDatabase);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
+  late final FeedItemDao feedItemDao = FeedItemDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1485,6 +2053,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     feedTags,
     categoryTable,
     feedCategories,
+    feedItemsTable,
   ];
 }
 
@@ -2358,6 +2927,294 @@ typedef $$FeedCategoriesTableProcessedTableManager =
       FeedCategory,
       PrefetchHooks Function()
     >;
+typedef $$FeedItemsTableTableCreateCompanionBuilder =
+    FeedItemsTableCompanion Function({
+      Value<String> id,
+      required String feedId,
+      required String title,
+      required String url,
+      Value<String?> description,
+      Value<DateTime?> publishedAt,
+      Value<bool> isRead,
+      Value<bool> isFavorite,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$FeedItemsTableTableUpdateCompanionBuilder =
+    FeedItemsTableCompanion Function({
+      Value<String> id,
+      Value<String> feedId,
+      Value<String> title,
+      Value<String> url,
+      Value<String?> description,
+      Value<DateTime?> publishedAt,
+      Value<bool> isRead,
+      Value<bool> isFavorite,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$FeedItemsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FeedItemsTableTable> {
+  $$FeedItemsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get feedId => $composableBuilder(
+    column: $table.feedId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get publishedAt => $composableBuilder(
+    column: $table.publishedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FeedItemsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FeedItemsTableTable> {
+  $$FeedItemsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get feedId => $composableBuilder(
+    column: $table.feedId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get publishedAt => $composableBuilder(
+    column: $table.publishedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FeedItemsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FeedItemsTableTable> {
+  $$FeedItemsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get feedId =>
+      $composableBuilder(column: $table.feedId, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get publishedAt => $composableBuilder(
+    column: $table.publishedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isRead =>
+      $composableBuilder(column: $table.isRead, builder: (column) => column);
+
+  GeneratedColumn<bool> get isFavorite => $composableBuilder(
+    column: $table.isFavorite,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$FeedItemsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FeedItemsTableTable,
+          FeedItemsTableData,
+          $$FeedItemsTableTableFilterComposer,
+          $$FeedItemsTableTableOrderingComposer,
+          $$FeedItemsTableTableAnnotationComposer,
+          $$FeedItemsTableTableCreateCompanionBuilder,
+          $$FeedItemsTableTableUpdateCompanionBuilder,
+          (
+            FeedItemsTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $FeedItemsTableTable,
+              FeedItemsTableData
+            >,
+          ),
+          FeedItemsTableData,
+          PrefetchHooks Function()
+        > {
+  $$FeedItemsTableTableTableManager(
+    _$AppDatabase db,
+    $FeedItemsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FeedItemsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FeedItemsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FeedItemsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> feedId = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> url = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<DateTime?> publishedAt = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
+                Value<bool> isFavorite = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FeedItemsTableCompanion(
+                id: id,
+                feedId: feedId,
+                title: title,
+                url: url,
+                description: description,
+                publishedAt: publishedAt,
+                isRead: isRead,
+                isFavorite: isFavorite,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String feedId,
+                required String title,
+                required String url,
+                Value<String?> description = const Value.absent(),
+                Value<DateTime?> publishedAt = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
+                Value<bool> isFavorite = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FeedItemsTableCompanion.insert(
+                id: id,
+                feedId: feedId,
+                title: title,
+                url: url,
+                description: description,
+                publishedAt: publishedAt,
+                isRead: isRead,
+                isFavorite: isFavorite,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FeedItemsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FeedItemsTableTable,
+      FeedItemsTableData,
+      $$FeedItemsTableTableFilterComposer,
+      $$FeedItemsTableTableOrderingComposer,
+      $$FeedItemsTableTableAnnotationComposer,
+      $$FeedItemsTableTableCreateCompanionBuilder,
+      $$FeedItemsTableTableUpdateCompanionBuilder,
+      (
+        FeedItemsTableData,
+        BaseReferences<_$AppDatabase, $FeedItemsTableTable, FeedItemsTableData>,
+      ),
+      FeedItemsTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2372,4 +3229,6 @@ class $AppDatabaseManager {
       $$CategoryTableTableTableManager(_db, _db.categoryTable);
   $$FeedCategoriesTableTableManager get feedCategories =>
       $$FeedCategoriesTableTableManager(_db, _db.feedCategories);
+  $$FeedItemsTableTableTableManager get feedItemsTable =>
+      $$FeedItemsTableTableTableManager(_db, _db.feedItemsTable);
 }
