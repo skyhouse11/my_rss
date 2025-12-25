@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedTable extends Table {
-  TextColumn get id => text().clientDefault(const Uuid().v4)();
+  TextColumn get id => text().clientDefault(() => const Uuid().v4())();
   TextColumn get url => text()();
   TextColumn get title => text().nullable()();
   TextColumn get description => text().nullable()();

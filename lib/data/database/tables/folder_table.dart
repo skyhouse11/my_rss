@@ -1,9 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
-class CategoryTable extends Table {
+class FolderTable extends Table {
   TextColumn get id => text().clientDefault(() => const Uuid().v4())();
-  TextColumn get name => text()();
+  TextColumn get title => text()();
+  TextColumn get parentId => text().nullable()();
   DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
 
   @override

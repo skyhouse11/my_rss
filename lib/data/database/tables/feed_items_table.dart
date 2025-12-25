@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedItemsTable extends Table {
-  TextColumn get id => text().clientDefault(const Uuid().v4)();
+  TextColumn get id => text().clientDefault(() => const Uuid().v4())();
   TextColumn get feedId =>
       text().customConstraint('REFERENCES feed_table(id)')();
   TextColumn get title => text()();

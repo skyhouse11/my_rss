@@ -17,7 +17,7 @@ class $FeedTableTable extends FeedTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: const Uuid().v4,
+    clientDefault: () => Uuid().v4(),
   );
   static const VerificationMeta _urlMeta = const VerificationMeta('url');
   @override
@@ -525,6 +525,311 @@ class FeedTableCompanion extends UpdateCompanion<FeedTableData> {
   }
 }
 
+class $FolderTableTable extends FolderTable
+    with TableInfo<$FolderTableTable, FolderTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FolderTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => Uuid().v4(),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentIdMeta = const VerificationMeta(
+    'parentId',
+  );
+  @override
+  late final GeneratedColumn<String> parentId = GeneratedColumn<String>(
+    'parent_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: DateTime.now,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, title, parentId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'folder_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FolderTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(
+        _parentIdMeta,
+        parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FolderTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FolderTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $FolderTableTable createAlias(String alias) {
+    return $FolderTableTable(attachedDatabase, alias);
+  }
+}
+
+class FolderTableData extends DataClass implements Insertable<FolderTableData> {
+  final String id;
+  final String title;
+  final String? parentId;
+  final DateTime createdAt;
+  const FolderTableData({
+    required this.id,
+    required this.title,
+    this.parentId,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<String>(parentId);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  FolderTableCompanion toCompanion(bool nullToAbsent) {
+    return FolderTableCompanion(
+      id: Value(id),
+      title: Value(title),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory FolderTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FolderTableData(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      parentId: serializer.fromJson<String?>(json['parentId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'parentId': serializer.toJson<String?>(parentId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  FolderTableData copyWith({
+    String? id,
+    String? title,
+    Value<String?> parentId = const Value.absent(),
+    DateTime? createdAt,
+  }) => FolderTableData(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    parentId: parentId.present ? parentId.value : this.parentId,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  FolderTableData copyWithCompanion(FolderTableCompanion data) {
+    return FolderTableData(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FolderTableData(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('parentId: $parentId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, title, parentId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FolderTableData &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.parentId == this.parentId &&
+          other.createdAt == this.createdAt);
+}
+
+class FolderTableCompanion extends UpdateCompanion<FolderTableData> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<String?> parentId;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const FolderTableCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FolderTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    this.parentId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : title = Value(title);
+  static Insertable<FolderTableData> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<String>? parentId,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (parentId != null) 'parent_id': parentId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FolderTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String?>? parentId,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return FolderTableCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      parentId: parentId ?? this.parentId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<String>(parentId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FolderTableCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('parentId: $parentId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TagTableTable extends TagTable
     with TableInfo<$TagTableTable, TagTableData> {
   @override
@@ -539,7 +844,7 @@ class $TagTableTable extends TagTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: const Uuid().v4,
+    clientDefault: () => Uuid().v4(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -1004,7 +1309,7 @@ class $CategoryTableTable extends CategoryTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: const Uuid().v4,
+    clientDefault: () => Uuid().v4(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -1479,7 +1784,7 @@ class $FeedItemsTableTable extends FeedItemsTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: const Uuid().v4,
+    clientDefault: () => Uuid().v4(),
   );
   static const VerificationMeta _feedIdMeta = const VerificationMeta('feedId');
   @override
@@ -2035,6 +2340,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $FeedTableTable feedTable = $FeedTableTable(this);
+  late final $FolderTableTable folderTable = $FolderTableTable(this);
   late final $TagTableTable tagTable = $TagTableTable(this);
   late final $FeedTagsTable feedTags = $FeedTagsTable(this);
   late final $CategoryTableTable categoryTable = $CategoryTableTable(this);
@@ -2043,12 +2349,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final TagDao tagDao = TagDao(this as AppDatabase);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
   late final FeedItemDao feedItemDao = FeedItemDao(this as AppDatabase);
+  late final FolderDao folderDao = FolderDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     feedTable,
+    folderTable,
     tagTable,
     feedTags,
     categoryTable,
@@ -2316,6 +2624,187 @@ typedef $$FeedTableTableProcessedTableManager =
         BaseReferences<_$AppDatabase, $FeedTableTable, FeedTableData>,
       ),
       FeedTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$FolderTableTableCreateCompanionBuilder =
+    FolderTableCompanion Function({
+      Value<String> id,
+      required String title,
+      Value<String?> parentId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$FolderTableTableUpdateCompanionBuilder =
+    FolderTableCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String?> parentId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$FolderTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FolderTableTable> {
+  $$FolderTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get parentId => $composableBuilder(
+    column: $table.parentId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FolderTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FolderTableTable> {
+  $$FolderTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get parentId => $composableBuilder(
+    column: $table.parentId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FolderTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FolderTableTable> {
+  $$FolderTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get parentId =>
+      $composableBuilder(column: $table.parentId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$FolderTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FolderTableTable,
+          FolderTableData,
+          $$FolderTableTableFilterComposer,
+          $$FolderTableTableOrderingComposer,
+          $$FolderTableTableAnnotationComposer,
+          $$FolderTableTableCreateCompanionBuilder,
+          $$FolderTableTableUpdateCompanionBuilder,
+          (
+            FolderTableData,
+            BaseReferences<_$AppDatabase, $FolderTableTable, FolderTableData>,
+          ),
+          FolderTableData,
+          PrefetchHooks Function()
+        > {
+  $$FolderTableTableTableManager(_$AppDatabase db, $FolderTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FolderTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FolderTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FolderTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> parentId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FolderTableCompanion(
+                id: id,
+                title: title,
+                parentId: parentId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String title,
+                Value<String?> parentId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FolderTableCompanion.insert(
+                id: id,
+                title: title,
+                parentId: parentId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FolderTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FolderTableTable,
+      FolderTableData,
+      $$FolderTableTableFilterComposer,
+      $$FolderTableTableOrderingComposer,
+      $$FolderTableTableAnnotationComposer,
+      $$FolderTableTableCreateCompanionBuilder,
+      $$FolderTableTableUpdateCompanionBuilder,
+      (
+        FolderTableData,
+        BaseReferences<_$AppDatabase, $FolderTableTable, FolderTableData>,
+      ),
+      FolderTableData,
       PrefetchHooks Function()
     >;
 typedef $$TagTableTableCreateCompanionBuilder =
@@ -3221,6 +3710,8 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$FeedTableTableTableManager get feedTable =>
       $$FeedTableTableTableManager(_db, _db.feedTable);
+  $$FolderTableTableTableManager get folderTable =>
+      $$FolderTableTableTableManager(_db, _db.folderTable);
   $$TagTableTableTableManager get tagTable =>
       $$TagTableTableTableManager(_db, _db.tagTable);
   $$FeedTagsTableTableManager get feedTags =>
