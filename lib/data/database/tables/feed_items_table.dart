@@ -17,5 +17,7 @@ class FeedItemsTable extends Table {
   Set<Column> get primaryKey => {id};
 
   @override
-  List<String> get customConstraints => const ['UNIQUE(feed_id, url)'];
+  List<String> get customConstraints => const [
+    'CONSTRAINT feed_item_unique_feed_url UNIQUE (feed_id, url)',
+  ];
 }

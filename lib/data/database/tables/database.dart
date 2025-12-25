@@ -38,12 +38,14 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) => m.createAll(),
     onUpgrade: (m, from, to) async {
-      await m.createTable(tagTable);
-      await m.createTable(feedTags);
-      await m.createTable(categoryTable);
-      await m.createTable(feedCategories);
-      await m.createTable(feedItemsTable);
-      await m.createTable(folderTable);
+      if (from < 4) {
+        await m.createTable(tagTable);
+        await m.createTable(feedTags);
+        await m.createTable(categoryTable);
+        await m.createTable(feedCategories);
+        await m.createTable(feedItemsTable);
+        await m.createTable(folderTable);
+      }
     },
   );
 

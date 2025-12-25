@@ -13,15 +13,17 @@ extension FeedToCompanion on Feed {
       createdAt: Value(createdAt ?? DateTime.now()),
     );
   }
+}
 
-  Feed fromCompanion(FeedTableData data) {
+extension FeedTableDataMapper on FeedTableData {
+  Feed toModel() {
     return Feed(
-      id: data.id,
-      title: data.title ?? '',
-      url: data.url,
-      description: data.description,
-      lastUpdatedAt: data.lastUpdatedAt,
-      createdAt: data.createdAt,
+      id: id,
+      title: title ?? '',
+      url: url,
+      description: description,
+      lastUpdatedAt: lastUpdatedAt,
+      createdAt: createdAt,
     );
   }
-}
+} 

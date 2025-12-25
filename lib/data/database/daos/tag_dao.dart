@@ -3,6 +3,7 @@ import 'package:my_rss/data/database/tables/database.dart';
 import 'package:my_rss/data/database/tables/feed_table.dart';
 import 'package:my_rss/data/database/tables/feed_tag_table.dart';
 import 'package:my_rss/data/database/tables/tag_table.dart';
+import 'package:uuid/uuid.dart';
 
 part 'tag_dao.g.dart';
 
@@ -44,10 +45,11 @@ class TagDao extends DatabaseAccessor<AppDatabase> with _$TagDaoMixin {
   Future<TagTableData> getOrCreateByName(String name) async {
     final existing = await findByName(name);
     if (existing != null) return existing;
-    final id = await into(
+    final id = const Uuid().v4();
+    await into(
       tagTable,
-    ).insert(TagTableCompanion.insert(name: name));
-    return (select(tagTable)..where((t) => t.id.equals('$id'))).getSingle();
+    ).insert(TagTableCompanion(id: Value(id), name: Value(name)));
+    return (select(tagTable)..where((t) => t.id.equals(id))).getSingle();
   }
 
   Future<List<FeedTableData>> getFeedsForTag(String tagId) async {

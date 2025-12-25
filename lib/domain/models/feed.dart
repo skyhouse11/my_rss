@@ -31,10 +31,10 @@ abstract class Feed with _$Feed {
 
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 
-  factory Feed.fromRssFeed(RssFeed rssFeed) {
-    final id = const Uuid().v4();
+  factory Feed.fromRssFeed(RssFeed rssFeed, {String? id}) {
+    final idValue = id ?? const Uuid().v4();
     return Feed(
-      id: id,
+      id: idValue,
       title: rssFeed.title ?? 'No title',
       url: rssFeed.link ?? '',
       description: rssFeed.description,

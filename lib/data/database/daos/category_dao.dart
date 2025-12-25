@@ -3,6 +3,7 @@ import 'package:my_rss/data/database/tables/category_table.dart';
 import 'package:my_rss/data/database/tables/database.dart';
 import 'package:my_rss/data/database/tables/feed_category_table.dart';
 import 'package:my_rss/data/database/tables/feed_table.dart';
+import 'package:uuid/uuid.dart';
 
 part 'category_dao.g.dart';
 
@@ -53,12 +54,11 @@ class CategoryDao extends DatabaseAccessor<AppDatabase>
   Future<CategoryTableData> getOrCreateByName(String name) async {
     final existing = await findByName(name);
     if (existing != null) return existing;
-    final id = await into(categoryTable).insert(
-      CategoryTableCompanion.insert(name: name),
+    final id = const Uuid().v4();
+    await into(categoryTable).insert(
+      CategoryTableCompanion(id: Value(id), name: Value(name)),
     );
-    return (select(
-      categoryTable,
-    )..where((t) => t.id.equals('$id'))).getSingle();
+    return (select(categoryTable)..where((t) => t.id.equals(id))).getSingle();
   }
 
   Future<List<FeedTableData>> getFeedsForCategory(String categoryId) async {
