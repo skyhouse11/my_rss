@@ -23,7 +23,6 @@ dependencies:
   watch_it: ^2.4.1
   command_it: ^9.5.0
   rss_dart: ^1.0.14
-  injectable: ^2.7.1+4
   flutter_hooks: ^0.21.3+1
   forui_hooks: ^0.17.0
   uuid: ^4.5.2
@@ -31,15 +30,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   build_runner: ^2.10.4
   freezed: ^3.2.3
   json_serializable: ^6.11.2
   drift_dev: ^2.30.0
   very_good_analysis: ^10.0.0
-  # Code generators
-  injectable_generator: ^2.7.1+4
   auto_route_generator: ^10.4.0
 
 flutter:

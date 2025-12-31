@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:my_rss/core/di/service_locator.dart';
 import 'package:my_rss/material_mapping.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
   runApp(const Application());
 }
 

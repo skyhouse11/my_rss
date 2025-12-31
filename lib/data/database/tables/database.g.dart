@@ -17,7 +17,7 @@ class $FeedTableTable extends FeedTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => Uuid().v4(),
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _urlMeta = const VerificationMeta('url');
   @override
@@ -539,7 +539,7 @@ class $FolderTableTable extends FolderTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => Uuid().v4(),
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
@@ -844,7 +844,7 @@ class $TagTableTable extends TagTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => Uuid().v4(),
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -854,7 +854,7 @@ class $TagTableTable extends TagTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    $customConstraints: 'UNIQUE',
+    $customConstraints: 'UNIQUE NOT NULL',
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -1099,7 +1099,7 @@ class $FeedTagsTable extends FeedTags with TableInfo<$FeedTagsTable, FeedTag> {
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    $customConstraints: 'REFERENCES feed_table(id)',
+    $customConstraints: 'REFERENCES feed_table(id) NOT NULL',
   );
   static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
   @override
@@ -1309,7 +1309,7 @@ class $CategoryTableTable extends CategoryTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => Uuid().v4(),
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -1565,7 +1565,7 @@ class $FeedCategoriesTable extends FeedCategories
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    $customConstraints: 'REFERENCES feed_table(id)',
+    $customConstraints: 'REFERENCES feed_table(id) NOT NULL',
   );
   static const VerificationMeta _categoryIdMeta = const VerificationMeta(
     'categoryId',
@@ -1577,7 +1577,7 @@ class $FeedCategoriesTable extends FeedCategories
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    $customConstraints: 'REFERENCES category_table(id)',
+    $customConstraints: 'REFERENCES category_table(id) NOT NULL',
   );
   @override
   List<GeneratedColumn> get $columns => [feedId, categoryId];
@@ -1784,7 +1784,7 @@ class $FeedItemsTableTable extends FeedItemsTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => Uuid().v4(),
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _feedIdMeta = const VerificationMeta('feedId');
   @override
@@ -1794,7 +1794,7 @@ class $FeedItemsTableTable extends FeedItemsTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    $customConstraints: 'REFERENCES feed_table(id)',
+    $customConstraints: 'REFERENCES feed_table(id) NOT NULL',
   );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override

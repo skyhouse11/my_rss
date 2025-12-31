@@ -82,7 +82,10 @@ extension AppDatabaseExtensions on AppDatabase {
       // Handle categories
       for (final categoryName in categoryNames) {
         final category = await categoryDao.getOrCreateByName(categoryName);
-        await categoryDao.addCategoryToFeed(feed.id, category.id);
+        categoryDao.addCategoryToFeedCommand.run((
+          feedId: feed.id,
+          categoryId: category.id,
+        ));
       }
     });
   }
