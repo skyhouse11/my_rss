@@ -18,25 +18,33 @@ class FolderDao extends DatabaseAccessor<AppDatabase> with _$FolderDaoMixin {
     initialValue: <FolderTableData>[],
   );
 
-  late final createFolderCommand = Command.createAsyncNoResult<CreateFolderData>(
-    (data) async => into(folderTable).insert(
-      FolderTableCompanion.insert(title: data.title, parentId: Value(data.parentId)),
-    ),
-  );
+  late final createFolderCommand =
+      Command.createAsyncNoResult<CreateFolderData>(
+        (data) async => into(folderTable).insert(
+          FolderTableCompanion.insert(
+            title: data.title,
+            parentId: Value(data.parentId),
+          ),
+        ),
+      );
 
   late final getFeedsForFolderCommand = Command.createAsync(
-    (String folderId) async => (select(feedTable)..where((f) => f.folderId.equals(folderId))).get(),
+    (String folderId) async =>
+        (select(feedTable)..where((f) => f.folderId.equals(folderId))).get(),
     initialValue: <FeedTableData>[],
   );
 
-  late final moveFeedToFolderCommand = Command.createAsyncNoResult<MoveFeedToFolderData>(
-    (data) async => (update(feedTable)..where((f) => f.id.equals(data.feedId))).write(
-      FeedTableCompanion(folderId: Value(data.folderId)),
-    ),
-  );
+  late final moveFeedToFolderCommand =
+      Command.createAsyncNoResult<MoveFeedToFolderData>(
+        (data) async =>
+            (update(feedTable)..where((f) => f.id.equals(data.feedId))).write(
+              FeedTableCompanion(folderId: Value(data.folderId)),
+            ),
+      );
 
   late final getChildrenCommand = Command.createAsync(
-    (String parentId) async => (select(folderTable)..where((f) => f.parentId.equals(parentId))).get(),
+    (String parentId) async =>
+        (select(folderTable)..where((f) => f.parentId.equals(parentId))).get(),
     initialValue: <FolderTableData>[],
   );
 }

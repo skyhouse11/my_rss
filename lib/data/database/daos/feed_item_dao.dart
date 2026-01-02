@@ -15,38 +15,47 @@ class FeedItemDao extends DatabaseAccessor<AppDatabase>
     with _$FeedItemDaoMixin {
   FeedItemDao(AppDatabase db) : super(db);
 
-  late final upsertItemCommand = Command.createAsyncNoResult<FeedItemsTableCompanion>(
-    (c) async => into(feedItemsTable).insert(c, mode: InsertMode.insertOrReplace),
-  );
+  late final upsertItemCommand =
+      Command.createAsyncNoResult<FeedItemsTableCompanion>(
+        (c) async =>
+            into(feedItemsTable).insert(c, mode: InsertMode.insertOrReplace),
+      );
 
-  late final upsertItemsCommand = Command.createAsyncNoResult<List<FeedItemsTableCompanion>>(
-    (items) async => transaction(() async {
-      for (final c in items) {
-        await into(feedItemsTable).insert(c, mode: InsertMode.insertOrReplace);
-      }
-    }),
-  );
+  late final upsertItemsCommand =
+      Command.createAsyncNoResult<List<FeedItemsTableCompanion>>(
+        (items) async => transaction(() async {
+          for (final c in items) {
+            await into(
+              feedItemsTable,
+            ).insert(c, mode: InsertMode.insertOrReplace);
+          }
+        }),
+      );
 
   late final getItemByUrlCommand = Command.createAsync(
-    (FeedItemQuery query) async => (select(feedItemsTable)
-          ..where((tbl) => tbl.feedId.equals(query.feedId) & tbl.url.equals(query.url)))
-        .getSingleOrNull(),
+    (FeedItemQuery query) async =>
+        (select(feedItemsTable)..where(
+              (tbl) =>
+                  tbl.feedId.equals(query.feedId) & tbl.url.equals(query.url),
+            ))
+            .getSingleOrNull(),
     initialValue: null,
   );
 
   late final getItemsForFeedCommand = Command.createAsync(
     (FeedItemsForFeedQuery query) async {
-      final s = (select(feedItemsTable)
-          ..where((tbl) => tbl.feedId.equals(query.feedId))
-          ..orderBy(
-            [
-              (t) => OrderingTerm(
-                expression: t.publishedAt,
-                mode: OrderingMode.desc,
-              ),
-            ],
-          ))
-        ..limit(query.limit ?? 100, offset: query.offset ?? 0);
+      final s =
+          (select(feedItemsTable)
+              ..where((tbl) => tbl.feedId.equals(query.feedId))
+              ..orderBy(
+                [
+                  (t) => OrderingTerm(
+                    expression: t.publishedAt,
+                    mode: OrderingMode.desc,
+                  ),
+                ],
+              ))
+            ..limit(query.limit ?? 100, offset: query.offset ?? 0);
 
       return s.get();
     },
@@ -54,22 +63,29 @@ class FeedItemDao extends DatabaseAccessor<AppDatabase>
   );
 
   late final markReadCommand = Command.createAsyncNoResult<MarkItemQuery>(
-    (query) async => (update(feedItemsTable)..where((tbl) => tbl.id.equals(query.id))).write(
-      FeedItemsTableCompanion(
-        isRead: Value(query.read),
-      ),
-    ),
+    (query) async =>
+        (update(feedItemsTable)..where((tbl) => tbl.id.equals(query.id))).write(
+          FeedItemsTableCompanion(
+            isRead: Value(query.read),
+          ),
+        ),
   );
 
-  late final markFavoriteCommand = Command.createAsyncNoResult<MarkItemFavoriteQuery>(
-    (query) async => (update(feedItemsTable)..where((tbl) => tbl.id.equals(query.id))).write(
-      FeedItemsTableCompanion(
-        isFavorite: Value(query.favorite),
-      ),
-    ),
-  );
+  late final markFavoriteCommand =
+      Command.createAsyncNoResult<MarkItemFavoriteQuery>(
+        (query) async =>
+            (update(
+              feedItemsTable,
+            )..where((tbl) => tbl.id.equals(query.id))).write(
+              FeedItemsTableCompanion(
+                isFavorite: Value(query.favorite),
+              ),
+            ),
+      );
 
   late final deleteItemsForFeedCommand = Command.createAsyncNoResult<String>(
-    (feedId) async => (delete(feedItemsTable)..where((tbl) => tbl.feedId.equals(feedId))).go(),
+    (feedId) async => (delete(
+      feedItemsTable,
+    )..where((tbl) => tbl.feedId.equals(feedId))).go(),
   );
 }

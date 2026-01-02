@@ -30,9 +30,11 @@ class TagDao extends DatabaseAccessor<AppDatabase> with _$TagDaoMixin {
   );
 
   late final removeTagFromFeedCommand = Command.createAsyncNoResult<TagInFeed>(
-    (data) async => (delete(feedTags)
-          ..where((t) => t.feedId.equals(data.feedId) & t.tagId.equals(data.tagId)))
-        .go(),
+    (data) async =>
+        (delete(feedTags)..where(
+              (t) => t.feedId.equals(data.feedId) & t.tagId.equals(data.tagId),
+            ))
+            .go(),
   );
 
   late final getTagsForFeedCommand = Command.createAsync(
@@ -58,8 +60,9 @@ class TagDao extends DatabaseAccessor<AppDatabase> with _$TagDaoMixin {
       final existing = await findByNameCommand.runAsync(name);
       if (existing != null) return existing;
       final id = const Uuid().v4();
-      await into(tagTable)
-          .insert(TagTableCompanion(id: Value(id), name: Value(name)));
+      await into(
+        tagTable,
+      ).insert(TagTableCompanion(id: Value(id), name: Value(name)));
       return (select(tagTable)..where((t) => t.id.equals(id))).getSingle();
     },
     initialValue: null,
