@@ -51,14 +51,4 @@ class FeedRepository {
       loadFeedsCommand.run();
     },
   );
-
-  late final setFeedAsFavorite = Command.createAsyncNoResult(
-    (Feed feed) async {
-      await feedDao.updateFeed(
-        id: feed.id,
-        autoFetch: true,
-      );
-      loadFeedsCommand.run();
-    },
-  );
 }
