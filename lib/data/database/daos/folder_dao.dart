@@ -32,4 +32,8 @@ class FolderDao extends DatabaseAccessor<AppDatabase> with _$FolderDaoMixin {
       folderTable,
     )..where((f) => f.parentId.equals(parentId))).get();
   }
+
+  Future<void> deleteFolder(String folderId) async {
+    await (delete(folderTable)..where((f) => f.id.equals(folderId))).go();
+  }
 }
