@@ -75,22 +75,14 @@ extension AppDatabaseExtensions on AppDatabase {
 
       // Handle tags
       for (final tagName in tagNames) {
-        final tag = await tagDao.getOrCreateByNameCommand.runAsync(tagName);
-        await tagDao.addTagToFeedCommand.runAsync((
-          feedId: feed.id,
-          tagId: tag?.id ?? '',
-        ));
+        final tag = await tagDao.getOrCreateByName(tagName);
+        await tagDao.addTagToFeed(feed.id, tag.id);
       }
 
       // Handle categories
       for (final categoryName in categoryNames) {
-        final category = await categoryDao.getOrCreateByNameCommand.runAsync(
-          categoryName,
-        );
-        categoryDao.addCategoryToFeedCommand.run((
-          feedId: feed.id,
-          categoryId: category?.id ?? '',
-        ));
+        final category = await categoryDao.getOrCreateByName(categoryName);
+        await categoryDao.addCategoryToFeed(category.id, feed.id);
       }
     });
   }
